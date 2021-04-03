@@ -1,0 +1,7 @@
+.idea
+
+tmp
+
+*.exe
+*.iml
+/gin-bin

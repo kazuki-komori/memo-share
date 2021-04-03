@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13.1-alpine
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./:/go/src/app
+    command: "gin --appPort 8080 --port 3000"
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    security_opt:
+      - apparmor:unconfined
+    cap_add:
+      - SYS_PTRACE
