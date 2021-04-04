@@ -5,3 +5,5 @@ tmp
 *.exe
 *.iml
 /gin-bin
+
+dbconfig.yml

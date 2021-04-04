@@ -2,6 +2,7 @@ package web
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -17,7 +18,7 @@ func NewServer() {
 
 	v1.GET("/health", health)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":"+os.Getenv("PORT")))
 }
 
 // Active check
