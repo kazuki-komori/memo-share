@@ -2,12 +2,17 @@ version: "3.8"
 
 services:
   db:
-    image: postgres:13.1-alpine
+    image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - 5432:5432
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pass
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=ja_JP.UTF-8"
 
   api:
     build:
@@ -20,6 +25,12 @@ services:
     command: "gin --appPort 8080 --port 3000"
     ports:
       - 3000:3000
+    environment:
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      DB_NAME: db
+      DB_USERNAME: admin
+      DB_PASS: pass
     depends_on:
       - db
     security_opt:

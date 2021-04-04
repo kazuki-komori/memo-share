@@ -10,6 +10,10 @@ docker-compose build
 docker-compose up
 ```
 
+```bash
+sql-migrate up
+```
+
 ## 環境
 
 - golang v.1.15.7
