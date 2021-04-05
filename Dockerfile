@@ -13,3 +13,4 @@ RUN go mod download
 EXPOSE 8080
 
 RUN go get -u github.com/codegangsta/gin
+RUN go get -v github.com/rubenv/sql-migrate/...

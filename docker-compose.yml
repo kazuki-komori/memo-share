@@ -31,6 +31,8 @@ services:
       DB_NAME: db
       DB_USERNAME: admin
       DB_PASS: pass
+    env_file:
+      - .env
     depends_on:
       - db
     security_opt:
