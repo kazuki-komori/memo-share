@@ -4,14 +4,21 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 )
 
-func NewDB() (*gorm.DB, error) {
+type SqlHandler struct {
+	db *gorm.DB
+}
 
-	db, err := gorm.Open("postgres", "host=db port=5432 user=admin dbname=db password=pass")
+func NewDB() (*SqlHandler, error) {
+
+	db, err := gorm.Open("postgres", "postgres://admin:pass@db:5432/db?sslmode=disable")
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to conntect db= %w", err)
+		return nil, fmt.Errorf("failed to connect db= %w", err)
 	}
-	return db, nil
+	sqlHandler := new(SqlHandler)
+	sqlHandler.db = db
+	return sqlHandler, nil
 }

@@ -22,6 +22,10 @@ func toMemoJSON() *memosJSON {
 	return &mjs
 }
 
+func PostMemo(c echo.Context) error {
+	return c.JSON(http.StatusCreated, "{}")
+}
+
 type memoJSON struct {
 	ID            int    `json:"id"`
 	ContentsTitle string `json:"contents_title"`
