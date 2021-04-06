@@ -3,3 +3,9 @@ development:
   datasource: host=db port=5432 dbname=db user=admin password=pass sslmode=disable
   dir: postgres/schemes
   table: migration
+
+production:
+  dialect: postgres
+  datasource: postgres://cqssdsqrpesevk:41d81d20a86e1caf345e1d9b185d8f49612a12bef5f07c82673a0cbde92074df@ec2-52-45-73-150.compute-1.amazonaws.com:5432/d6fnrdslcg2kbk
+  dir: postgres/schemes
+  table: migration

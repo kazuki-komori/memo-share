@@ -2,6 +2,7 @@ FROM golang:1.15.7-alpine
 
 ENV ROOT=/go/src/app
 ENV CGO_ENABLED=0
+ENV GO111MODULE=on
 
 WORKDIR ${ROOT}
 

@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/kazuki-komori/memo-share/web/handler"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -18,7 +20,9 @@ func NewServer() {
 
 	v1.GET("/health", health)
 
-	e.Logger.Fatal(e.Start(":"+os.Getenv("PORT")))
+	v1.GET("/memo", handler.GetMemo)
+
+	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 }
 
 // Active check

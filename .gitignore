@@ -6,6 +6,8 @@ tmp
 *.iml
 /gin-bin
 
+vendor
+
 .vscode
 
 dbconfig.yml

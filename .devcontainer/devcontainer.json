@@ -20,12 +20,29 @@
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
-		"terminal.integrated.shell.linux": null
+		"terminal.integrated.shell.linux": null,
+		"go.useLanguageServer": true,
+		"go.alternateTools": {
+			"go-langserver": "gopls"
+		},
+		"go.toolsEnvVars": {"GO111MODULE": "on"},
+		"[go]": {
+			"editor.snippetSuggestions": "none",
+			"editor.formatOnSave": true,
+			"editor.codeActionsOnSave": {
+				"source.organizeImports": true
+			},
+		},
+		"gopls": {
+			"usePlaceholders": false,
+			"experimentalWorkspaceModule": true
+		}
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"ms-vscode.go",
+		"golang.go",
 		"mtxr.sqltools-driver-pg",
 	],
 	"shutdownAction": "stopCompose"
