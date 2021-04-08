@@ -26,6 +26,7 @@ func NewServer(userUC *usecase.UserUsecase) {
 	v1.GET("/memo", handler.GetMemo)
 
 	v1.POST("/user/register", userHandler.PostUser)
+	v1.GET("/user/:id", userHandler.GetUserByID)
 
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 }

@@ -6,4 +6,5 @@ import (
 
 type UserRepository interface {
 	AddUser(user entity.User) error
+	GetUserByID(userID string) (user entity.User, err error)
 }

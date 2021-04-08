@@ -18,13 +18,25 @@ func NewUserHandler(userUC *usecase.UserUsecase) *UserHandler {
 }
 
 // POST /user/register ユーザーの登録
-func (h *UserHandler) PostUser(c echo.Context) error {
+func (h *UserHandler) PostUser(c echo.Context) (err error) {
 	user := new(entity.User)
-	err := c.Bind(user)
-	h.userUC.AddUser(*user)
-	fmt.Println(user)
+	err = c.Bind(user)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid params")
 	}
-	return c.JSON(http.StatusCreated, "{}")
+	err = h.userUC.AddUser(*user)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "failed to register User")
+	}
+	return c.JSON(http.StatusCreated, user)
+}
+
+// GET /user/:id
+func (h *UserHandler) GetUserByID(c echo.Context) error {
+	userID := c.Param("id")
+	user, err := h.userUC.GetUserByID(userID)
+	if err != nil {
+		return fmt.Errorf("failed to get user by id")
+	}
+	return c.JSON(http.StatusOK, user)
 }

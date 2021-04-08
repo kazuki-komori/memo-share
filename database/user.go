@@ -34,6 +34,15 @@ func (r *UserRepository) AddUser(userEntity entity.User) error {
 	return nil
 }
 
+// ユーザーを ID で取得
+func (r *UserRepository) GetUserByID(userID string) (user entity.User, err error) {
+	db := r.SqlHandler.db
+	defer db.Close()
+	user.ID = userID
+	db.First(&user)
+	return user, nil
+}
+
 type user struct {
 	ID        string    `json:"id"`
 	UserName  string    `json:"user_name"`

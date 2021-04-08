@@ -18,3 +18,9 @@ func (u *UserUsecase) AddUser(user entity.User) (err error) {
 	err = u.userRepository.AddUser(user)
 	return
 }
+
+// ユーザーを ID から取得
+func (u *UserUsecase) GetUserByID(userID string) (user entity.User, err error) {
+	user, err = u.userRepository.GetUserByID(userID)
+	return
+}
