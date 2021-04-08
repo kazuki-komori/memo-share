@@ -14,7 +14,13 @@ func NewMemoUsecase(memoRepo repository.MemoRepository) *MemoUsecase {
 }
 
 // メモの登録
-func (u *MemoUsecase) AddMemo(memo entity.Memo) (err error) {
+func (u *MemoUsecase) AddMemo(memo entity.Content) (err error) {
 	err = u.memoRepository.AddMemo(memo)
+	return
+}
+
+// メモを ID で取得
+func (u *MemoUsecase) GetMemoByID(id string) (memo entity.Content, err error) {
+	memo, err = u.memoRepository.GetMemoByID(id)
 	return
 }

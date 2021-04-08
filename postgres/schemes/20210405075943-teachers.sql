@@ -1,7 +1,7 @@
 
 -- +migrate Up
 CREATE TABLE teachers (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 -- +migrate Down

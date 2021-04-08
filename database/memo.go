@@ -18,27 +18,41 @@ func NewMemoRepository(sqlHandler SqlHandler) repository.MemoRepository {
 }
 
 // メモを登録
-func (r *MemoRepository) AddMemo(memo entity.Memo) error {
-	dto := new(content)
-	dto.Name = memo.Name
-	dto.Description = memo.Description
-	dto.UserID = memo.UserID
-	dto.SubjectID = memo.SubjectID
+func (r *MemoRepository) AddMemo(memo entity.Content) error {
+	// dto := new(content)
+	// dto.ID = CreateULID()
+	// dto.ContentTitle = memo.ContentTitle
+	// dto.Description = memo.Description
+	// dto.UserID = memo.UserID
+	// dto.SubjectID = memo.SubjectID
 	db := r.SqlHandler.db
-	res := db.Create(&dto)
+	res := db.Create(&memo)
 	if res.Error != nil {
 		return fmt.Errorf("failed to create user=%w", res.Error)
 	}
 	return nil
 }
 
+func (r *MemoRepository) GetMemoByID(id string) (memo entity.Content, err error) {
+	db := r.SqlHandler.db
+	defer db.Close()
+	dto := new(content)
+	dto.ID = id
+	memo.ID = dto.ID
+	memo.ContentTitle = dto.ContentTitle
+	memo.Description = dto.Description
+	db.First(&memo)
+	fmt.Println(memo)
+	return memo, err
+}
+
 // メモのデータオブジェクト
 type content struct {
-	ID          int       `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	UserID      string    `json:"user_id"`
-	SubjectID   string    `json:"subject_id"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID           string    `json:"id"`
+	ContentTitle string    `json:"content_title"`
+	Description  string    `json:"description"`
+	UserID       string    `json:"user_id"`
+	SubjectID    string    `json:"subject_id"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }

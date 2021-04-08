@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/kazuki-komori/memo-share/domain/entity"
@@ -32,14 +33,25 @@ func toMemoJSON() *memosJSON {
 	return &mjs
 }
 
+// POST /memo/create メモを登録
 func (h *MemoHandler) PostMemo(c echo.Context) (err error) {
-	memo := new(entity.Memo)
+	memo := new(entity.Content)
 	c.Bind(memo)
 	err = h.memoUC.AddMemo(*memo)
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "internal server error")
 	}
 	return c.JSON(http.StatusCreated, memo)
+}
+
+// GET /memo/:id id 指定でメモを取得
+func (h *MemoHandler) GetMemoByID(c echo.Context) (err error) {
+	memoID := c.Param("id")
+	memo, err := h.memoUC.GetMemoByID(memoID)
+	if err != nil {
+		return fmt.Errorf("failed to get memo=%w", err)
+	}
+	return c.JSON(http.StatusOK, memo)
 }
 
 type memoJSON struct {

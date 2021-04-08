@@ -2,9 +2,12 @@ package database
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
+	"github.com/oklog/ulid"
 )
 
 type SqlHandler struct {
@@ -21,4 +24,11 @@ func NewDB() (*SqlHandler, error) {
 	sqlHandler := new(SqlHandler)
 	sqlHandler.db = db
 	return sqlHandler, nil
+}
+
+func CreateULID() (ULID string) {
+	t := time.Now()
+	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+	id := ulid.MustNew(ulid.Timestamp(t), entropy)
+	return id.String()
 }

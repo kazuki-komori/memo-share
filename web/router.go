@@ -25,6 +25,7 @@ func NewServer(userUC *usecase.UserUsecase, memoUC *usecase.MemoUsecase) {
 	v1.GET("/health", health)
 
 	v1.GET("/memo", handler.GetMemo)
+	v1.GET("/memo/:id", memoHandler.GetMemoByID)
 	v1.POST("/memo/create", memoHandler.PostMemo)
 
 	v1.POST("/user/register", userHandler.PostUser)
