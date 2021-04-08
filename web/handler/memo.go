@@ -3,8 +3,18 @@ package handler
 import (
 	"net/http"
 
+	"github.com/kazuki-komori/memo-share/domain/entity"
+	"github.com/kazuki-komori/memo-share/usecase"
 	"github.com/labstack/echo"
 )
+
+type MemoHandler struct {
+	memoUC *usecase.MemoUsecase
+}
+
+func NewMemoHandler(memoUC *usecase.MemoUsecase) *MemoHandler {
+	return &MemoHandler{memoUC: memoUC}
+}
 
 // GET /memo メモ一覧を取得
 func GetMemo(c echo.Context) error {
@@ -22,8 +32,14 @@ func toMemoJSON() *memosJSON {
 	return &mjs
 }
 
-func PostMemo(c echo.Context) error {
-	return c.JSON(http.StatusCreated, "{}")
+func (h *MemoHandler) PostMemo(c echo.Context) (err error) {
+	memo := new(entity.Memo)
+	c.Bind(memo)
+	err = h.memoUC.AddMemo(*memo)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "internal server error")
+	}
+	return c.JSON(http.StatusCreated, memo)
 }
 
 type memoJSON struct {

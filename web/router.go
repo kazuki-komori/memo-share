@@ -11,19 +11,21 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
-func NewServer(userUC *usecase.UserUsecase) {
+func NewServer(userUC *usecase.UserUsecase, memoUC *usecase.MemoUsecase) {
 	e := echo.New()
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
 	userHandler := handler.NewUserHandler(userUC)
+	memoHandler := handler.NewMemoHandler(memoUC)
 
 	v1 := e.Group("/api/v1")
 
 	v1.GET("/health", health)
 
 	v1.GET("/memo", handler.GetMemo)
+	v1.POST("/memo/create", memoHandler.PostMemo)
 
 	v1.POST("/user/register", userHandler.PostUser)
 	v1.GET("/user/:id", userHandler.GetUserByID)

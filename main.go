@@ -17,5 +17,7 @@ func main() {
 	}
 	userRepo := database.NewUserRepository(*db)
 	userUC := usecase.NewUserUsecase(userRepo)
-	web.NewServer(userUC)
+	memoRepo := database.NewMemoRepository(*db)
+	memoUC := usecase.NewMemoUsecase(memoRepo)
+	web.NewServer(userUC, memoUC)
 }

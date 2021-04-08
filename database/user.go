@@ -26,7 +26,6 @@ func (r *UserRepository) AddUser(userEntity entity.User) error {
 	dto.UserName = userEntity.UserName
 	dto.FullName = userEntity.FullName
 	dto.Mail = userEntity.Mail
-	fmt.Println("hoge", dto)
 	res := db.Create(&dto)
 	if res.Error != nil {
 		return fmt.Errorf("failed to create user=%w", res.Error)
