@@ -24,3 +24,9 @@ func (u *MemoUsecase) GetMemoByID(id string) (memo entity.Content, err error) {
 	memo, err = u.memoRepository.GetMemoByID(id)
 	return
 }
+
+// メモ一覧を取得
+func (u *MemoUsecase) GetAllMemo() (memos []entity.Content, err error) {
+	memos, err = u.memoRepository.GetAllMemo()
+	return
+}

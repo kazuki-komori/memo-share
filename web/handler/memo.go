@@ -18,19 +18,10 @@ func NewMemoHandler(memoUC *usecase.MemoUsecase) *MemoHandler {
 }
 
 // GET /memo メモ一覧を取得
-func GetMemo(c echo.Context) error {
-	return c.JSON(http.StatusOK, toMemoJSON())
-}
-
-func toMemoJSON() *memosJSON {
-	mj := &memoJSON{
-		ID:            1,
-		ContentsTitle: "メモのタイトル",
-		SubjectID:     1,
-	}
-	mjs := memosJSON{}
-	mjs.Memos = append(mjs.Memos, mj)
-	return &mjs
+func (h *MemoHandler) GetAllMemo(c echo.Context) (err error) {
+	var memos []entity.Content
+	memos, err = h.memoUC.GetAllMemo()
+	return c.JSON(http.StatusCreated, memos)
 }
 
 // POST /memo/create メモを登録
@@ -52,14 +43,4 @@ func (h *MemoHandler) GetMemoByID(c echo.Context) (err error) {
 		return fmt.Errorf("failed to get memo=%w", err)
 	}
 	return c.JSON(http.StatusOK, memo)
-}
-
-type memoJSON struct {
-	ID            int    `json:"id"`
-	ContentsTitle string `json:"contents_title"`
-	SubjectID     int    `json:"subject_id"`
-}
-
-type memosJSON struct {
-	Memos []*memoJSON `json:"contents"`
 }
